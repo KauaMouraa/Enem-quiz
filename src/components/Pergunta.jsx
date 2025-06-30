@@ -5,6 +5,7 @@ const Pergunta = () => {
   const [quest, setQuest] = useState(null);
   const [resposta, setResposta] = useState(null);
   const [numero, setNumero] = useState(1);
+  const [exibirresposta, setExibirRespota] = useState(false);
 
   const ano = 2020;
 
@@ -33,6 +34,8 @@ const Pergunta = () => {
   function proximaQuestao() {
     setNumero(prev => prev + 1);
   }
+
+
 
   return (
     <div>
@@ -65,15 +68,29 @@ const Pergunta = () => {
       {resposta && (
         <p>
           Você escolheu a letra: <strong>{resposta}</strong><br />
-          A alternativa correta é: <strong>{quest.correctAlternative}</strong><br />
-          {resposta === quest.correctAlternative ? (
-            <span style={{ color: "green"}}>Você acertou!</span>
-            ) : (
-              <span style={{ color: "red"}}>Você errou.</span>
-          )}
         </p>
       )}
 
+      <div className="flex justify-content-center">
+
+        <button onClick={() => setExibirRespota(true)}>
+          exibir resposta
+          
+
+        </button>
+      </div>
+
+      {exibirresposta && (
+        <p>
+          {resposta === quest.correctAlternative ? (
+            <span style={{ color: "green"}}>Você acertou! </span>
+            ) : (
+              <span style={{ color: "red"}}>Você errou. </span>
+          )}
+          A resposta correta é: <span>{quest.correctAlternative}</span>
+        </p>
+      )}
+      
       <div className="flex justify-content-center">
         <button onClick={proximaQuestao}>
           Próxima questão →
