@@ -5,12 +5,12 @@ const Pergunta = () => {
   const [quest, setQuest] = useState(null);
   const [resposta, setResposta] = useState(null);
 
-  const year = 2020;
-  const index = 30;
+  const ano = 2020;
+  const numero = 31;
 
   async function getQuest() {
     try {
-      const response = await API.get(`/exams/${year}/questions/${index}`);
+      const response = await API.get(`/exams/${ano}/questions/${numero}`);
       setQuest(response.data);
     } catch (error) {
       console.log("Erro ao buscar a questão", error);
@@ -58,9 +58,16 @@ const Pergunta = () => {
 
       {resposta && (
         <p>
-          Você escolheu a letra: <strong>{resposta}</strong>
+          Você escolheu a letra: <strong>{resposta}</strong><br />
+          A alternativa correta é: <strong>{quest.correctAlternative}</strong><br />
+          {resposta === quest.correctAlternative ? (
+            <span style={{ color: "green"}}>Você acertou!</span>
+            ) : (
+              <span style={{ color: "red"}}>Você errou.</span>
+          )}
         </p>
       )}
+
     </div>
   );
 };
