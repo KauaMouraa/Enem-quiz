@@ -4,9 +4,9 @@ import { API } from "../services/API";
 const Pergunta = () => {
   const [quest, setQuest] = useState(null);
   const [resposta, setResposta] = useState(null);
+  const [numero, setNumero] = useState(1);
 
   const ano = 2020;
-  const numero = 31;
 
   async function getQuest() {
     try {
@@ -19,7 +19,8 @@ const Pergunta = () => {
 
   useEffect(() => {
     getQuest();
-  }, []);
+    setResposta(null);
+  }, [numero]);
 
   if (!quest) {
     return <p>Carregando...</p>;
@@ -29,9 +30,14 @@ const Pergunta = () => {
     setResposta(letra);
   }
 
+  function proximaQuestao() {
+    setNumero(prev => prev + 1);
+  }
+
   return (
     <div>
       <h2>{quest.title}</h2>
+      <p>{quest.context}</p>
 
       {quest.files && quest.files.map((img, i) => (
         <img key={i} src={img} alt="imagem da questão" width="300" />
@@ -67,6 +73,13 @@ const Pergunta = () => {
           )}
         </p>
       )}
+
+      <div className="flex justify-content-center">
+        <button onClick={proximaQuestao}>
+          Próxima questão →
+        </button>
+      </div>
+      
 
     </div>
   );
